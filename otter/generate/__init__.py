@@ -24,7 +24,7 @@ from ..utils import load_default_file
 TEMPLATE_DIR = pkg_resources.resource_filename(__name__, "templates")
 MINICONDA_INSTALL_URL = "https://repo.anaconda.com/miniconda/Miniconda3-py38_4.10.3-Linux-x86_64.sh"
 OTTER_ENV_NAME = "otter-env"
-OTTR_BRANCH = "1.1.2"  # this should match a release tag on GitHub
+OTTR_BRANCH = "1.1.3"  # this should match a release tag on GitHub
 
 
 def main(*, tests_dir="./tests", output_path="autograder.zip", config=None, no_config=False, 
@@ -97,7 +97,7 @@ def main(*, tests_dir="./tests", output_path="autograder.zip", config=None, no_c
     options.update(otter_config)
 
     # update language
-    options["lang"] = lang.lower()
+    options["lang"] = options.get("lang", lang.lower())
 
     template_dir = os.path.join(TEMPLATE_DIR, options["lang"])
 
@@ -113,6 +113,7 @@ def main(*, tests_dir="./tests", output_path="autograder.zip", config=None, no_c
         "otter_env_name": OTTER_ENV_NAME,
         "miniconda_install_url": MINICONDA_INSTALL_URL,
         "ottr_branch": OTTR_BRANCH,
+        "channel_priority_strict": options["channel_priority_strict"],
     }
 
     if plugin_collection is None:
