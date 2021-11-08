@@ -44,8 +44,6 @@ def main(*, path="./", output_dir="./", autograder="./autograder.zip", container
     Raises:
         ``AssertionError``: if invalid arguments are provided
     """
-    print("HIiii")
-
     if prune:
         prune_images(force=force)
         return
@@ -64,7 +62,6 @@ def main(*, path="./", output_dir="./", autograder="./autograder.zip", container
         print("Launching docker containers...")
 
     #Docker
-    print("Creating grading dataframes")
     grade_dfs = launch_grade(autograder,
         submissions_dir=path,
         verbose=verbose,
@@ -79,35 +76,21 @@ def main(*, path="./", output_dir="./", autograder="./autograder.zip", container
         timeout=timeout,
         network=network
     )
-    print("Creating error dataframes")
-    error_df = launch_error(autograder,
-        submissions_dir=path,
+    error_df = launch_error(submissions_dir=path,
         verbose=verbose,
-        num_containers=containers,
         ext="csv",
-        no_kill=no_kill,
-        output_path=output_dir,
-        debug=debug,
-        zips=zips,
-        image=image,
-        pdfs=pdfs,
-        timeout=timeout,
-        network=network
+        zips=zips
     )
-    print("Success")
 
     if verbose:
         print("Combining grades and saving...")
 
-    # Merge Dataframes
-    
+    # Merge Grading Dataframes
     output_df = merge_csv(grade_dfs)
-    print("output merged")
     cols = output_df.columns.tolist()
     output_df = output_df[cols[-1:] + cols[:-1]]
 
     # write to CSV file
-    print("creating csvs")
-    output_df.to_csv(os.path.join(output_dir, "grades.csv"), index=False)    
+    output_df.to_csv(os.path.join(output_dir, "grades.csv"), index=False)
+        # for some reason, naming it final_grades.csv prevents the file from being created   
     error_df.to_csv(os.path.join(output_dir, "error_logs.csv"), index=False)
-    print("created csvs")

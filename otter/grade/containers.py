@@ -86,7 +86,6 @@ def launch_grade(zip_path, submissions_dir, verbose=False, num_containers=None, 
     pdf_dir = os.path.join(output_path, "submission_pdfs")
 
     for subm_path in submissions:
-        print("Submission:", subm_path)
         futures += [
             pool.submit(
                 grade_assignments,
@@ -104,54 +103,31 @@ def launch_grade(zip_path, submissions_dir, verbose=False, num_containers=None, 
 
     # stop execution while containers are running
     finished_futures = wait(futures)
-    print("Finished futures", finished_futures)
 
     # return list of dataframes
     return [df.result() for df in finished_futures[0]]
 
-def launch_error(zip_path, submissions_dir, verbose=False, num_containers=None, ext="csv", 
-                 no_kill=False, output_path="./", debug=False, zips=False,
-                 image="ucbdsinfra/otter-grader", pdfs=False, timeout=None, network=True):
+def launch_error(submissions_dir, verbose=False, ext="csv", zips=False):
     """
-    Grades notebooks in parallel Docker containers
-
-    This function runs ``num_containers`` Docker containers in parallel to grade the student submissions
-    in ``submissions_dir`` using the autograder configuration file at ``zip_path``. It can additionally 
-    generate PDFs for the parts of the assignment needing manual grading.
+    Merges error logs.
 
     Args:
-        zip_path(``str``): path to zip file used to set up container
-        submissions_dir (``str``): path to directory of student submissions to be graded
+        submissions_dir (``str``): path to directory of student error logs
         verbose (``bool``, optional): whether status messages should be printed to the command line
-        num_containers (``int``, optional): The number of parallel containers that will be run
-        ext (``str``, optional): the submission file extension for globbing
-        no_kill (``bool``, optional): whether the grading containers should be kept running after
-            grading finishes
-        output_path (``str``, optional): path at which to write grades CSVs copied from the container
-        debug (``bool``, optional): whether to run grading in debug mode (prints grading STDOUT and STDERR
-            from each container to the command line)
-        zips (``bool``, optional): whether the submissions are zip files formatted from ``Notebook.export``
-        image (``str``, optional): a base image to use for building Docker images
-        pdfs (``bool``, optional): whether to copy PDFs out of the containers
-        timeout (``int``): timeout in seconds for each container
-        network (``bool``): whether to enable networking in the containers
-
-    Returns:
-        ``list`` of ``pandas.core.frame.DataFrame``: the grades returned by each container spawned during
-            grading
+        ext (``str``, optional): the error log file extension for globbing
+        zips (``bool``, optional): whether the logs are zip files formatted from ``Notebook.export``
     """
     if zips:
         pattern = "*.zip"
     else:
         pattern = f"*.{ext}"
 
-    print("Concatenating errors")
     errors = glob.glob(os.path.join(submissions_dir, pattern))
-
-    print("creating error df")
     df_each = (pd.read_csv(f, sep=',') for f in errors)
-    print("merging dfs")
     df_merged = pd.concat(df_each, ignore_index=True)
+
+    if verbose:
+        print("Error logs merged")
 
     return df_merged
 
