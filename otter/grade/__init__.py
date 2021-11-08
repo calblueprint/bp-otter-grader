@@ -3,8 +3,9 @@
 import os
 import pandas as pd
 import re
+import csv
 
-from .containers import launch_grade
+from .containers import launch_grade, launch_error
 from .utils import merge_csv, prune_images
 
 from ..utils import assert_path_exists
@@ -43,6 +44,8 @@ def main(*, path="./", output_dir="./", autograder="./autograder.zip", container
     Raises:
         ``AssertionError``: if invalid arguments are provided
     """
+    print("HIiii")
+
     if prune:
         prune_images(force=force)
         return
@@ -61,6 +64,7 @@ def main(*, path="./", output_dir="./", autograder="./autograder.zip", container
         print("Launching docker containers...")
 
     #Docker
+    print("Creating grading dataframes")
     grade_dfs = launch_grade(autograder,
         submissions_dir=path,
         verbose=verbose,
@@ -75,14 +79,35 @@ def main(*, path="./", output_dir="./", autograder="./autograder.zip", container
         timeout=timeout,
         network=network
     )
+    print("Creating error dataframes")
+    error_df = launch_error(autograder,
+        submissions_dir=path,
+        verbose=verbose,
+        num_containers=containers,
+        ext="csv",
+        no_kill=no_kill,
+        output_path=output_dir,
+        debug=debug,
+        zips=zips,
+        image=image,
+        pdfs=pdfs,
+        timeout=timeout,
+        network=network
+    )
+    print("Success")
 
     if verbose:
         print("Combining grades and saving...")
 
     # Merge Dataframes
+    
     output_df = merge_csv(grade_dfs)
+    print("output merged")
     cols = output_df.columns.tolist()
     output_df = output_df[cols[-1:] + cols[:-1]]
 
     # write to CSV file
-    output_df.to_csv(os.path.join(output_dir, "final_grades.csv"), index=False)
+    print("creating csvs")
+    output_df.to_csv(os.path.join(output_dir, "grades.csv"), index=False)    
+    error_df.to_csv(os.path.join(output_dir, "error_logs.csv"), index=False)
+    print("created csvs")

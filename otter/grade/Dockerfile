@@ -4,6 +4,9 @@ RUN apt-get update && apt-get install -y curl unzip dos2unix && apt-get clean &&
 RUN mkdir -p /autograder/source
 ARG ZIPPATH
 ARG BASE_IMAGE
+ADD . /home/otter-grader
+ADD . /home/otter-grader
+ADD . /home/otter-grader
 RUN echo $BASE_IMAGE
 ADD ${ZIPPATH} /tmp/autograder.zip
 ENV BASE_IMAGE=$BASE_IMAGE
