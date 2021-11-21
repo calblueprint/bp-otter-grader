@@ -15,6 +15,7 @@ from unittest import mock
 
 from otter.generate import main as generate
 from otter.grade import main as grade
+from otter.grade.containers import launch_error as error
 
 from . import TestCase
 
@@ -135,6 +136,7 @@ class TestGrade(TestCase):
         )
 
         # read the output and expected output
+        error_test = pd.read_csv("test/error_logs.csv")
         df_test = pd.read_csv("test/final_grades.csv")
 
         # sort by filename
@@ -160,12 +162,23 @@ class TestGrade(TestCase):
 
         self.assertTrue(os.path.exists("test/submission_pdfs"), "PDF folder is missing")
 
-        # check that an pdf exists for each submission
+        # check that a pdf exists for each submission
         dir1_contents, dir2_contents = (
             [os.path.splitext(f)[0] for f in os.listdir(TEST_FILES_PATH + "notebooks/") if not (os.path.isdir(os.path.join(TEST_FILES_PATH + "notebooks/", f)))],
             [os.path.splitext(f)[0] for f in os.listdir("test/submission_pdfs") if not (os.path.isdir(os.path.join("test/submission_pdfs", f)))],
         )
         self.assertEqual(sorted(dir1_contents), sorted(dir2_contents), f"'{TEST_FILES_PATH}notebooks/' and 'test/submission_pdfs' have different contents")
+
+    def test_errors(self):
+        print("Running error test")
+        error_df = error(
+            submissions_dir = TEST_FILES_PATH,
+            verbose = True,
+            ext = "csv",
+            zips = True
+        )
+        error_df.to_csv(os.path.join("test/", "error_zip_logs4.csv"), index=False)
+        print("Successfully created error logs from zip file")
 
     def tearDown(self) -> None:
         # remove the extra output

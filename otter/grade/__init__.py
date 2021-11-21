@@ -91,6 +91,6 @@ def main(*, path="./", output_dir="./", autograder="./autograder.zip", container
     output_df = output_df[cols[-1:] + cols[:-1]]
 
     # write to CSV file
+    output_df.to_csv(os.path.join(output_dir, "final_grades.csv"), index=False)
     output_df.to_csv(os.path.join(output_dir, "grades.csv"), index=False)
-        # for some reason, naming it final_grades.csv prevents the file from being created   
     error_df.to_csv(os.path.join(output_dir, "error_logs.csv"), index=False)

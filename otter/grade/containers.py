@@ -6,6 +6,7 @@ import pickle
 import pkg_resources
 import shutil
 import tempfile
+from zipfile import ZipFile
 
 from concurrent.futures import ThreadPoolExecutor, wait
 from python_on_whales import docker
@@ -123,8 +124,16 @@ def launch_error(submissions_dir, verbose=False, ext="csv", zips=False):
         pattern = f"*.{ext}"
 
     errors = glob.glob(os.path.join(submissions_dir, pattern))
-    df_each = (pd.read_csv(f, sep=',') for f in errors)
+    if zips:
+        df_each = []
+        for folder in errors:
+            zf = ZipFile(folder, 'r')
+            zip_list = [file for file in zf.namelist() if f".{ext}" in file]
+            df_each.extend([pd.read_csv(zf.open(f), sep=',') for f in zip_list])
+    else:
+        df_each = (pd.read_csv(f, sep=',') for f in errors)
     df_merged = pd.concat(df_each, ignore_index=True)
+
 
     if verbose:
         print("Error logs merged")

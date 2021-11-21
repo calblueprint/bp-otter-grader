@@ -7,6 +7,8 @@ ARG BASE_IMAGE
 ADD . /home/otter-grader
 ADD . /home/otter-grader
 ADD . /home/otter-grader
+ADD . /home/otter-grader
+ADD . /home/otter-grader
 RUN echo $BASE_IMAGE
 ADD ${ZIPPATH} /tmp/autograder.zip
 ENV BASE_IMAGE=$BASE_IMAGE
