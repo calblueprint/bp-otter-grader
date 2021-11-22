@@ -136,7 +136,6 @@ class TestGrade(TestCase):
         )
 
         # read the output and expected output
-        error_test = pd.read_csv("test/error_logs.csv")
         df_test = pd.read_csv("test/final_grades.csv")
 
         # sort by filename
@@ -161,6 +160,7 @@ class TestGrade(TestCase):
                     self.assertEqual(row[test], self.test_points[test], "{} supposed to pass {} but failed".format(row["file"], test))
 
         self.assertTrue(os.path.exists("test/submission_pdfs"), "PDF folder is missing")
+        self.assertTrue(os.path.exists("test/student_error_logs.csv"), "Error logs are missing")
 
         # check that a pdf exists for each submission
         dir1_contents, dir2_contents = (
@@ -170,7 +170,6 @@ class TestGrade(TestCase):
         self.assertEqual(sorted(dir1_contents), sorted(dir2_contents), f"'{TEST_FILES_PATH}notebooks/' and 'test/submission_pdfs' have different contents")
 
     def test_errors(self):
-        print("Running error test")
         error_df = error(
             submissions_dir = TEST_FILES_PATH,
             verbose = True,
@@ -178,11 +177,11 @@ class TestGrade(TestCase):
             zips = True
         )
         error_df.to_csv(os.path.join("test/", "error_zip_logs.csv"), index=False)
-        print("Successfully created error logs from zip file")
+        self.assertTrue(os.path.exists("test/error_zip_logs.csv"), "Unable to unzip error logs")
 
     def tearDown(self) -> None:
         # remove the extra output
-        cleanup_command = ["rm", "-rf", "test/final_grades.csv", "test/submission_pdfs", "test/final_grades.csv"]
+        cleanup_command = ["rm", "-rf", "test/final_grades.csv", "test/submission_pdfs", "test/final_grades.csv", "test/error_zip_logs.csv"]
         cleanup = subprocess.run(cleanup_command, stdout=PIPE, stderr=PIPE)
         self.assertEqual(len(cleanup.stderr), 0, cleanup.stderr.decode("utf-8"))
 
