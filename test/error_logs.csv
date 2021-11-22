@@ -1,4 +1,5 @@
-0,TypeError,'int' object is not callable,0.1,Unnamed: 4
+index,error type,error message,feedback rating,feedback message
+0,TypeError,'int' object is not callable,0,
 1,TypeError,'int' object is not callable,0,
 2,TypeError,'int' object is not callable,0,
 3,NameError,name 'data8' is not defined,0,

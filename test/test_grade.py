@@ -177,7 +177,7 @@ class TestGrade(TestCase):
             ext = "csv",
             zips = True
         )
-        error_df.to_csv(os.path.join("test/", "error_zip_logs4.csv"), index=False)
+        error_df.to_csv(os.path.join("test/", "error_zip_logs.csv"), index=False)
         print("Successfully created error logs from zip file")
 
     def tearDown(self) -> None:

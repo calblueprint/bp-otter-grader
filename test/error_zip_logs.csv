@@ -1,0 +1,37 @@
+index,error type,error message,feedback rating,feedback message
+0,NameError,name 'data8' is not defined,0,
+1,NameError,name 'data8' is not defined,4,wwerwrewr
+2,NameError,name 'data8' is not defined,2,werwer
+3,NameError,name 'data8' is not defined,3,werwer
+4,NameError,name 'data8' is not defined,0,
+5,NameError,name 'data8' is not defined,3,
+6,NameError,name 'data8' is not defined,1,
+7,NameError,name 'data8' is not defined,2,werwerwer
+8,NameError,name 'data8' is not defined,3,
+9,NameError,name 'data8' is not defined,4,
+10,ValueError,invalid literal for int() with base 10: 'HI',0,
+11,TypeError,'int' object is not callable,4,e
+0,TypeError,'int' object is not callable,0,
+1,TypeError,'int' object is not callable,5,ergegserg
+2,TypeError,'int' object is not callable,0,
+3,TypeError,'int' object is not callable,2,
+4,TypeError,'int' object is not callable,2,ergsergergserg
+5,TypeError,'int' object is not callable,1,
+6,TypeError,'int' object is not callable,3,
+7,SyntaxError,"invalid syntax (Temp/ipykernel_21084/1866965863.py, line 1)",0,
+8,TypeError,'int' object is not callable,3,erg
+9,TypeError,'int' object is not callable,1,sergsergsergsergerg
+10,SyntaxError,"invalid syntax (Temp/ipykernel_21084/1866965863.py, line 1)",4,
+11,SyntaxError,"invalid syntax (Temp/ipykernel_21084/1866965863.py, line 1)",3,5rgergre
+0,SyntaxError,"invalid syntax (Temp/ipykernel_21084/1866965863.py, line 1)",1,wetrerertetertrt
+1,SyntaxError,"invalid syntax (Temp/ipykernel_21084/1866965863.py, line 1)",1,rtewtwertwertr
+2,SyntaxError,"invalid syntax (Temp/ipykernel_21084/1866965863.py, line 1)",1,etwrte
+3,NameError,name 'data8' is not defined,2,wrtertw
+4,SyntaxError,"invalid syntax (Temp/ipykernel_21084/1866965863.py, line 1)",0,wretwrtwertewt
+5,SyntaxError,"invalid syntax (Temp/ipykernel_21084/1866965863.py, line 1)",0,wrter
+6,NameError,name 'data8' is not defined,5,wretert
+7,SyntaxError,"invalid syntax (Temp/ipykernel_21084/1866965863.py, line 1)",3,wertwet
+8,TypeError,'int' object is not callable,0,wretre
+9,SyntaxError,"invalid syntax (Temp/ipykernel_21084/1866965863.py, line 1)",1,retwert
+10,ValueError,invalid literal for int() with base 10: 'HI',4,gww
+11,SyntaxError,"invalid syntax (Temp/ipykernel_21084/1866965863.py, line 1)",3,e
