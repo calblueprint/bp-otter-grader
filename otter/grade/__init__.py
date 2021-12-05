@@ -92,5 +92,4 @@ def main(*, path="./", output_dir="./", autograder="./autograder.zip", container
 
     # write to CSV file
     output_df.to_csv(os.path.join(output_dir, "final_grades.csv"), index=False)
-    output_df.to_csv(os.path.join(output_dir, "grades.csv"), index=False)
     error_df.to_csv(os.path.join(output_dir, "student_error_logs.csv"), index=False)

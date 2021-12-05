@@ -1,0 +1,12 @@
+0,NameError,name 'data8' is not defined,0,
+1,NameError,name 'data8' is not defined,4,wwerwrewr
+2,NameError,name 'data8' is not defined,2,werwer
+3,NameError,name 'data8' is not defined,3,werwer
+4,NameError,name 'data8' is not defined,0,
+5,NameError,name 'data8' is not defined,3,
+6,NameError,name 'data8' is not defined,1,
+7,NameError,name 'data8' is not defined,2,werwerwer
+8,NameError,name 'data8' is not defined,3,
+9,NameError,name 'data8' is not defined,4,
+10,ValueError,invalid literal for int() with base 10: 'HI',0,
+11,TypeError,'int' object is not callable,4,e

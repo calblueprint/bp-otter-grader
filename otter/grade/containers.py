@@ -135,6 +135,7 @@ def launch_error(submissions_dir, verbose=False, ext="csv", zips=False):
     else:
         df_each = (pd.read_csv(f, sep=',', header=None, names=columns) for f in errors)
     df_merged = pd.concat(df_each, ignore_index=True)
+    df_merged.drop('index', axis=1, inplace=True)
 
     if verbose:
         print("Error logs merged")

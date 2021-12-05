@@ -181,7 +181,7 @@ class TestGrade(TestCase):
 
     def tearDown(self) -> None:
         # remove the extra output
-        cleanup_command = ["rm", "-rf", "test/final_grades.csv", "test/submission_pdfs", "test/final_grades.csv", "test/error_zip_logs.csv"]
+        cleanup_command = ["rm", "-rf", "test/final_grades.csv", "test/submission_pdfs", "test/final_grades.csv", "test/error_zip_logs.csv", "test/student_error_logs.csv"]
         cleanup = subprocess.run(cleanup_command, stdout=PIPE, stderr=PIPE)
         self.assertEqual(len(cleanup.stderr), 0, cleanup.stderr.decode("utf-8"))
 
